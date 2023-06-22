@@ -10,6 +10,7 @@ class Api::V1::IncomesController < ApplicationController
 
   def create
     income = current_user.incomes.build(income_params)
+    income.currency = current_user.currency
     
     if income.save
       render_serialized_response(IncomeSerializer, income)

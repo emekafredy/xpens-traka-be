@@ -72,6 +72,12 @@ GEM
     builder (3.2.4)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -86,6 +92,7 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.8)
     diff-lcs (1.5.0)
+    docile (1.4.0)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
       zeitwerk (~> 2.6)
@@ -198,6 +205,12 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -219,6 +232,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  database_cleaner
   debug
   devise
   devise-jwt
@@ -230,6 +244,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.5)
   rspec-rails
+  simplecov
   tzinfo-data
 
 RUBY VERSION

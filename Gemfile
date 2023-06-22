@@ -45,6 +45,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
+  gem "database_cleaner"
 end
 
 group :development do
@@ -52,3 +53,6 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem 'simplecov', require: false
+end
