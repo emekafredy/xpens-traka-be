@@ -6,5 +6,10 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
         #  :recoverable, :rememberable, :validatable
 
+  has_many :incomes, dependent: :destroy
+  has_many :categories, dependent: :nullify
+
+  has_one_attached :avatar
+
   validates :username, presence: true
 end

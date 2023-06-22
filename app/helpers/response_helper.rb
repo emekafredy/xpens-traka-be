@@ -1,6 +1,6 @@
 module ResponseHelper
   def render_serialized_response(serializer, result)
-    render json: serializer.new(result).serializable_hash
+    render json: serializer.new(result).serialized_response
   end
 
   def record_not_found(record = 'Record')
@@ -36,7 +36,16 @@ module ResponseHelper
         code: 200,
         message: message
       },
-      data: render_serialized_response(serializer, result)
+      data: serializer.new(result).serializable_hash[:data],
+    }, status: :ok
+  end
+
+  def render_success_without_data(message = "Success")
+    render json: {
+      status: {
+        code: 200,
+        message: message
+      }
     }, status: :ok
   end
 end

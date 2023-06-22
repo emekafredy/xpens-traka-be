@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+["Salary", "Others"].each do |item|
+  Category.create!(
+    name: item,
+    section: "Income"
+  )
+end
+
+%w[Food Transportation Shopping Miscellaneous Drinks].each do |item|
+  Category.create!(
+    name: item,
+    section: "Expense"
+  )
+end

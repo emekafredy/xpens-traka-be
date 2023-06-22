@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       devise_scope :user do
         get 'users/my_account', to: 'users/sessions#my_account'
       end
+
+      resources :incomes, only: %i[index create show update destroy]
+      resources :categories, only: %i[index create]
     end
   end
 end
