@@ -14,4 +14,15 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :username, presence: true
   validates :currency, presence: true
+
+  def generate_token
+    JWT.encode(
+      { id: id, exp: 5.days.from_now.to_i, email: email },
+      ENV['TOKEN_SECRET_KEY']
+    )
+  end
+
+  def auth_token
+    generate_token
+  end
 end

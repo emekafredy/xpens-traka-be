@@ -12,13 +12,13 @@ module ResponseHelper
     }, status: :not_found
   end
 
-  def not_authorized(code = 401, message = 'You are not authorized to perform this action.', status = :unauthorized)
+  def not_authorized(message = 'You are not authorized to perform this action.')
     render json: {
       status: {
-        code: code,
+        code: 401,
         message: message
       }
-    }, status: status
+    }, status: :unauthorized
   end
 
   def bad_request_error(record, status = :bad_request, code = 400)

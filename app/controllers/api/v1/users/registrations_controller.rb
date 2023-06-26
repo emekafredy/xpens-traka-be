@@ -1,27 +1,22 @@
 # frozen_string_literal: true
 
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
-  include RackSessionFix
-
   respond_to :json
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :sign_up_params, only: [:create]
 
-  private
+  def signup
+    user = User.new(sign_up_params)
 
-  def respond_with(resource, _opts = {})
-    if request.method == "POST" && resource.persisted?
-      render_success("Signup successful.", UserSerializer, resource)
-    elsif request.method == "DELETE"
-      render json: {
-        status: { code: 200, message: "Account deleted successfully."}
-      }, status: :ok
+    if user.save
+      render_serialized_response(AuthSerializer, user)
     else
-      bad_request_error(resource)
+      bad_request_error(user)
     end
   end
 
-  # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :currency])
+  private
+
+  def sign_up_params
+    params.permit(:email, :password, :username)
   end
 end
