@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ResponseHelper
   def render_serialized_response(serializer, result)
     render json: serializer.new(result).serialized_response
@@ -30,17 +32,7 @@ module ResponseHelper
     }, status: status
   end
 
-  def render_success(message = "Success", serializer, result)
-    render json: {
-      status: {
-        code: 200,
-        message: message
-      },
-      data: serializer.new(result).serializable_hash[:data],
-    }, status: :ok
-  end
-
-  def render_success_without_data(message = "Success")
+  def render_success_without_data(message = 'Success')
     render json: {
       status: {
         code: 200,

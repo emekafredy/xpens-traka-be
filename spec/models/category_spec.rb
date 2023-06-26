@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Income, type: :model do
-  let(:user) { create(:user) }
+RSpec.describe Category, type: :model do
   subject(:category) { create(:category, user: user) }
+
+  let(:user) { create(:user) }
 
   it 'is created with valid attributes' do
     expect(category).to be_valid

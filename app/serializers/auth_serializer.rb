@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class AuthSerializer < ApplicationSerializer
   attributes :id, :email, :username
 
   attribute :created_date do |user|
-    user.created_at && user.created_at.strftime('%m/%d/%Y')
+    user.created_at&.strftime('%m/%d/%Y')
   end
 
   attribute :auth_token do |user|
