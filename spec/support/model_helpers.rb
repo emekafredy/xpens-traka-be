@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ModelHelpers
   def create_user
     @user = create(:user)

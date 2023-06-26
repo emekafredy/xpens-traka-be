@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Users::SessionsController', type: :request do
@@ -17,7 +19,7 @@ RSpec.describe 'Api::V1::Users::SessionsController', type: :request do
         expect(response).to have_http_status(:success)
 
         data = JSON.parse(response.body)['data']
-        expect(data["attributes"]["username"]).to eq 'john.doe'
+        expect(data['attributes']['username']).to eq 'john.doe'
       end
     end
 
@@ -34,8 +36,8 @@ RSpec.describe 'Api::V1::Users::SessionsController', type: :request do
         expect(response).to have_http_status(:unauthorized)
         data = JSON.parse(response.body)
 
-        expect(data["status"]["code"]).to eq 401
-        expect(data["status"]["message"]).to eq "Email or Password is incorrect. Please try again."
+        expect(data['status']['code']).to eq 401
+        expect(data['status']['message']).to eq 'Email or Password is incorrect. Please try again.'
       end
     end
   end
@@ -48,7 +50,7 @@ RSpec.describe 'Api::V1::Users::SessionsController', type: :request do
       expect(response).to have_http_status(:success)
 
       data = JSON.parse(response.body)['data']
-      expect(data["attributes"]["username"]).to eq 'john.doe'
+      expect(data['attributes']['username']).to eq 'john.doe'
     end
   end
 end

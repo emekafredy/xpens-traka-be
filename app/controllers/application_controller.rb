@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   include ResponseHelper
 
   def authenticate_user!
-    return not_authorized unless request.headers['Authorization'].present?
-    @token = request.headers['Authorization'].split(' ')[1]
+    return not_authorized if request.headers['Authorization'].blank?
+
+    @token = request.headers['Authorization'].split[1]
 
     begin
       @payload = JWT.decode(@token, ENV['TOKEN_SECRET_KEY'])[0]

@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Income, type: :model do
+  subject(:income) { create(:income, user: user, category: category) }
+
   let(:user) { create(:user) }
   let(:category) { create(:category) }
-  subject(:income) { create(:income, user: user, category: category) }
 
   it 'is created with valid attributes' do
     expect(income).to be_valid
@@ -14,7 +17,7 @@ RSpec.describe Income, type: :model do
     expect(income).not_to be_valid
   end
 
-  it 'requires  date' do
+  it 'requires date' do
     income.date = nil
     expect(income).not_to be_valid
   end

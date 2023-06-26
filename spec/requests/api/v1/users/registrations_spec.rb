@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Users::RegistrationsController', type: :request do
@@ -17,8 +19,8 @@ RSpec.describe 'Api::V1::Users::RegistrationsController', type: :request do
 
         data = JSON.parse(response.body)['data']
 
-        expect(data["attributes"]["email"]).to eq 'test@example.com'
-        expect(data["attributes"]["username"]).to eq 'tester'
+        expect(data['attributes']['email']).to eq 'test@example.com'
+        expect(data['attributes']['username']).to eq 'tester'
       end
     end
 
@@ -36,8 +38,8 @@ RSpec.describe 'Api::V1::Users::RegistrationsController', type: :request do
         expect(response).to have_http_status(:bad_request)
         data = JSON.parse(response.body)
 
-        expect(data["status"]["code"]).to eq 400
-        expect(data["status"]["message"]).to eq "Error: Password is too short (minimum is 6 characters)"
+        expect(data['status']['code']).to eq 400
+        expect(data['status']['message']).to eq 'Error: Password is too short (minimum is 6 characters)'
       end
     end
   end

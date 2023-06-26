@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AuthHelpers
   def authenticate_user(user)
     token = generate_token(user)
@@ -13,4 +15,3 @@ module AuthHelpers
     )
   end
 end
-
