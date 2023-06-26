@@ -1,19 +1,14 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: 'application#index'
-  devise_for :users, path: 'api/v1/users/', path_names: {
-    sign_in: 'login',
-    sign_out: 'logout',
-    registration: 'signup'
-  },
-  controllers: {
-    sessions: 'api/v1/users/sessions',
-    registrations: 'api/v1/users/registrations'
-  }
+  devise_for :users, path: 'api/v1/users/'
 
   namespace :api do
     namespace :v1 do
       devise_scope :user do
+        post 'users/signup', to: 'users/registrations#signup'
+        post 'users/login', to: 'users/sessions#login'
+        delete 'users/logout', to: 'users/sessions#logout'
         get 'users/my_account', to: 'users/sessions#my_account'
       end
 

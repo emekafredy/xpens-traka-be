@@ -4,4 +4,5 @@ class Category < ApplicationRecord
   enum section: { income: "Income", expense: "Expense" }
 
   validates :name, presence: true
+  validates :section, presence: true
 end
