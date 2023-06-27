@@ -25,4 +25,14 @@ class Budget < ApplicationRecord
   def date_config
     errors.add(:start_date, 'must be lesser the End date') if date_deficit?
   end
+
+  def actual_incomes_total
+    incomes = Income.where(date: start_date..end_date)
+    incomes.sum(:amount)
+  end
+
+  def actual_expenses_total
+    expenses = Expense.where(date: start_date..end_date)
+    expenses.sum(:amount)
+  end
 end
