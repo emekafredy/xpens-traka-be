@@ -11,6 +11,7 @@ AllCops:
   Exclude:
     - db/**/*
     - bin/**/*
+    - vendor/**/*.rb
 
 Style/Documentation:
   Enabled: false
