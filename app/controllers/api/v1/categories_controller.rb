@@ -7,7 +7,6 @@ module Api
 
       def index
         categories = Category.where(section: params[:section], user_id: [current_user.id, nil])
-
         render_serialized_response(CategorySerializer, categories)
       end
 
