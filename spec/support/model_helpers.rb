@@ -8,4 +8,8 @@ module ModelHelpers
   def create_category
     @category = create(:category)
   end
+
+  def create_budget
+    @budget = create(:budget, user: @user)
+  end
 end

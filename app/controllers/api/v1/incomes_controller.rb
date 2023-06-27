@@ -8,7 +8,6 @@ module Api
 
       def index
         @incomes = current_user.incomes
-
         render_serialized_response(IncomeSerializer, @incomes)
       end
 

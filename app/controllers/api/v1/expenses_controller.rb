@@ -8,7 +8,6 @@ module Api
 
       def index
         @expenses = current_user.expenses
-
         render_serialized_response(ExpenseSerializer, @expenses)
       end
 

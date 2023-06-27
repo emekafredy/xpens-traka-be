@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :incomes, dependent: :destroy
   has_many :categories, dependent: :nullify
   has_many :expenses, dependent: :destroy
+  has_many :budgets, dependent: :destroy
 
   has_one_attached :avatar
 
