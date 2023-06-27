@@ -2,6 +2,7 @@
 
 class CreateIncomes < ActiveRecord::Migration[7.0]
   def change
+    enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
     create_table :incomes, id: :uuid do |t|
       t.date :date, null: false
       t.decimal :amount, precision: 16, scale: 2
