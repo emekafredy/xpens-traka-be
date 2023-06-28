@@ -10,6 +10,7 @@ module Api
           user = User.new(sign_up_params)
 
           if user.save
+            UserMailerJob.perform_later(user.id)
             render_serialized_response(AuthSerializer, user)
           else
             bad_request_error(user)

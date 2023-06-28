@@ -41,6 +41,7 @@ gem 'devise-jwt'
 gem 'dotenv-rails'
 gem 'jsonapi-serializer'
 gem 'rack-cors'
+gem 'sidekiq'
 gem 'validates_overlap'
 
 group :development, :test do
