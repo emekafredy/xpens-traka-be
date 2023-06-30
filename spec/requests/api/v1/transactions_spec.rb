@@ -2,20 +2,20 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Expenses', type: :request do
+RSpec.describe 'Api::V1::Transactions', type: :request do
   before do
     create_user
     create_category
   end
 
-  describe 'GET /expenses' do
+  describe 'GET /transactions' do
     before do
-      create_list(:expense, 4, category: @category, user: @user)
+      create_list(:transaction, 4, category: @category, user: @user)
     end
 
     context 'without authorization' do
       it 'returns an auth error' do
-        get api_v1_expenses_path
+        get api_v1_transactions_path
 
         expect(response).to have_http_status(:unauthorized)
 
@@ -25,8 +25,8 @@ RSpec.describe 'Api::V1::Expenses', type: :request do
     end
 
     context 'with authorization' do
-      it 'returns all expenses for user' do
-        get api_v1_expenses_path, headers: authenticate_user(@user)
+      it 'returns all transactions for user' do
+        get api_v1_transactions_path, headers: authenticate_user(@user)
 
         expect(response).to have_http_status(:success)
 
@@ -38,37 +38,37 @@ RSpec.describe 'Api::V1::Expenses', type: :request do
 
   describe 'POST /create' do
     context 'with valid params' do
-      it 'creates new expense' do
+      it 'creates new transaction' do
         params = {
-          expense: {
-            amount: -500.00,
+          transaction: {
+            amount: 500.00,
             date: Time.zone.now,
-            category_id: @category.id
+            category_id: @category.id,
+            transaction_type: 'Income'
           }
         }
 
-        post api_v1_expenses_path,
+        post api_v1_transactions_path,
              params: params,
              headers: authenticate_user(@user)
 
         expect(response).to have_http_status(:success)
 
         data = JSON.parse(response.body)['data']
-        expect(data['attributes']['amount']).to eq '-500.0'
+        expect(data['attributes']['amount']).to eq '500.0'
       end
     end
 
     context 'with invalid params' do
       it 'throws an error' do
         params = {
-          expense: {
+          transaction: {
             amount: 500.00,
-            date: Time.zone.now,
             category_id: @category.id
           }
         }
 
-        post api_v1_expenses_path,
+        post api_v1_transactions_path,
              params: params,
              headers: authenticate_user(@user)
 
@@ -76,16 +76,16 @@ RSpec.describe 'Api::V1::Expenses', type: :request do
         data = JSON.parse(response.body)
 
         expect(data['status']['code']).to eq 400
-        expect(data['status']['message']).to eq 'Error: Amount must be less than 0'
+        expect(data['status']['message']).to eq "Error: Date can't be blank and Transaction type can't be blank"
       end
     end
   end
 
   describe 'GET /show' do
-    let(:expense) { create(:expense, category: @category, user: @user) }
+    let(:transaction) { create(:transaction, category: @category, user: @user) }
 
-    it 'returns selected expense' do
-      get api_v1_expense_path(expense),
+    it 'returns selected transaction' do
+      get api_v1_transaction_path(transaction),
           headers: authenticate_user(@user)
 
       expect(response).to have_http_status(:success)
@@ -93,36 +93,36 @@ RSpec.describe 'Api::V1::Expenses', type: :request do
   end
 
   describe 'PATCH /update' do
-    let(:expense) { create(:expense, category: @category, user: @user) }
+    let(:transaction) { create(:transaction, category: @category, user: @user) }
 
     context 'with valid params' do
-      it 'updates existing expense' do
+      it 'updates existing transaction' do
         params = {
-          expense: {
-            amount: -5000.00
+          transaction: {
+            amount: 5000.00
           }
         }
 
-        patch api_v1_expense_path(expense),
+        patch api_v1_transaction_path(transaction),
               params: params,
               headers: authenticate_user(@user)
 
         expect(response).to have_http_status(:success)
 
         data = JSON.parse(response.body)['data']
-        expect(data['attributes']['amount']).to eq '-5000.0'
+        expect(data['attributes']['amount']).to eq '5000.0'
       end
     end
 
     context 'with invalid params' do
       it 'throws an error' do
         params = {
-          expense: {
-            amount: 5000.0
+          transaction: {
+            amount: 0
           }
         }
 
-        patch api_v1_expense_path(expense),
+        patch api_v1_transaction_path(transaction),
               params: params,
               headers: authenticate_user(@user)
 
@@ -130,28 +130,28 @@ RSpec.describe 'Api::V1::Expenses', type: :request do
         data = JSON.parse(response.body)
 
         expect(data['status']['code']).to eq 400
-        expect(data['status']['message']).to eq 'Error: Amount must be less than 0'
+        expect(data['status']['message']).to eq 'Error: Amount must be other than 0'
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    let(:expense) { create(:expense, category: @category, user: @user) }
+    let(:transaction) { create(:transaction, category: @category, user: @user) }
 
-    it 'deletes selected expense' do
-      delete api_v1_expense_path(expense),
+    it 'deletes selected transaction' do
+      delete api_v1_transaction_path(transaction),
              headers: authenticate_user(@user)
 
       expect(response).to have_http_status(:success)
     end
 
-    context 'when expense is already deleted' do
-      let(:expense2) { create(:expense, category: @category, user: @user) }
+    context 'when transaction is already deleted' do
+      let(:transaction2) { create(:transaction, category: @category, user: @user) }
 
-      before { expense2.destroy }
+      before { transaction2.destroy }
 
       it 'throws an error' do
-        delete api_v1_expense_path(expense2),
+        delete api_v1_transaction_path(transaction2),
                headers: authenticate_user(@user)
 
         expect(response).to have_http_status(:not_found)
