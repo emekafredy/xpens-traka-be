@@ -8,10 +8,9 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
   #  :recoverable, :rememberable, :validatable
 
-  has_many :incomes, dependent: :destroy
   has_many :categories, dependent: :nullify
-  has_many :expenses, dependent: :destroy
   has_many :budgets, dependent: :destroy
+  has_many :transactions, dependent: :destroy
 
   has_one_attached :avatar
 
@@ -28,5 +27,27 @@ class User < ApplicationRecord
 
   def auth_token
     generate_token
+  end
+
+  def recent_transactions
+    transactions.order(created_at: :desc).limit(10)
+  end
+
+  def incomes_total
+    beginning_of_month = Time.zone.today.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    transactions.where(
+      transaction_type: 'Income',
+      created_at: beginning_of_month..end_of_month
+    ).sum(:amount)
+  end
+
+  def expenses_total
+    beginning_of_month = Time.zone.today.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    transactions.where(
+      transaction_type: 'Expense',
+      created_at: beginning_of_month..end_of_month
+    ).sum(:amount)
   end
 end

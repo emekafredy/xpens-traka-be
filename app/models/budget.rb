@@ -27,12 +27,12 @@ class Budget < ApplicationRecord
   end
 
   def actual_incomes_total
-    incomes = Income.where(date: start_date..end_date)
+    incomes = Transaction.where(transaction_type: 'Income', date: start_date..end_date)
     incomes.sum(:amount)
   end
 
   def actual_expenses_total
-    expenses = Expense.where(date: start_date..end_date)
+    expenses = Transaction.where(transaction_type: 'Expense', date: start_date..end_date)
     expenses.sum(:amount)
   end
 end
