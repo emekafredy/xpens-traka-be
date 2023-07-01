@@ -15,7 +15,7 @@ class Transaction < ApplicationRecord
   before_create :generate_transaction_id
 
   def generate_transaction_id
-    random_char = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+    random_char = Array.new(10) { [*'A'..'Z', *'0'..'9'].sample }.join
     self.transaction_id = "XT_#{random_char}"
   end
 end
