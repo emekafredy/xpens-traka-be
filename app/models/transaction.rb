@@ -11,4 +11,11 @@ class Transaction < ApplicationRecord
   validates :date, presence: true
   validates :transaction_type, presence: true
   validates :amount, presence: true, numericality: { other_than: 0 }
+
+  before_create :generate_transaction_id
+
+  def generate_transaction_id
+    random_char = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+    self.transaction_id = "XT_#{random_char}"
+  end
 end
