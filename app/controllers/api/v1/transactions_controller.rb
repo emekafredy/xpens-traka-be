@@ -11,7 +11,7 @@ module Api
                                     .where(transaction_type: params[:query])
                                     .order(created_at: :desc)
 
-        render_with_pagination(TransactionSerializer, @transactions, params[:page] || 1, 10)
+        render_with_pagination(TransactionSerializer, @transactions, params[:page] || 1, 12)
       end
 
       def create
