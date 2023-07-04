@@ -53,10 +53,10 @@ class User < ApplicationRecord
 
   def monthly_grouped_transactions_by_type(t_type)
     ordered = transactions.where(transaction_type: t_type).order(date: :desc)
-    grouped_data = ordered.group_by {|tr| tr.date.strftime("%b, %y")}
+    grouped_data = ordered.group_by { |tr| tr.date.strftime('%b, %y') }
 
     grouped_data.each_with_object([]) do |(key, value), array|
-      array << Hash[key, value.sum { |t| t[:amount] }]
+      array << ({ key => value.sum { |t| t[:amount] } })
     end
   end
 

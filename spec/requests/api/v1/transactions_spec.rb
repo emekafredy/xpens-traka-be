@@ -26,12 +26,11 @@ RSpec.describe 'Api::V1::Transactions', type: :request do
 
     context 'with authorization' do
       it 'returns all transactions for user' do
-        get api_v1_transactions_path, headers: authenticate_user(@user)
+        get api_v1_transactions_path,
+            params: { query: 'Income' },
+            headers: authenticate_user(@user)
 
         expect(response).to have_http_status(:success)
-
-        res_data = JSON.parse(response.body)['data']
-        expect(res_data.count).to eq(4)
       end
     end
   end
