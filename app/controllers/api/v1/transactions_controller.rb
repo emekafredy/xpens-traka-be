@@ -7,8 +7,11 @@ module Api
       before_action :set_transaction, only: %i[show update destroy]
 
       def index
-        @transactions = current_user.transactions.order(created_at: :desc).limit(10)
-        render_serialized_response(TransactionSerializer, @transactions)
+        @transactions = current_user.transactions
+                                    .where(transaction_type: params[:query])
+                                    .order(created_at: :desc)
+
+        render_with_pagination(TransactionSerializer, @transactions, params[:page] || 1, 10)
       end
 
       def create

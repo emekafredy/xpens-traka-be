@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class TransactionSerializer < ApplicationSerializer
-  attributes :id, :amount, :currency, :transaction_type
+  attributes :id, :amount, :currency, :transaction_type, :transaction_id
 
   attribute :date do |transaction|
-    transaction.date&.strftime('%m/%d/%Y')
+    transaction.date&.strftime('%d %b, %Y')
   end
 
   attribute :category_name do |transaction|

@@ -50,4 +50,21 @@ class User < ApplicationRecord
       created_at: beginning_of_month..end_of_month
     ).sum(:amount)
   end
+
+  def monthly_grouped_transactions_by_type(t_type)
+    ordered = transactions.where(transaction_type: t_type).order(date: :desc)
+    grouped_data = ordered.group_by {|tr| tr.date.strftime("%b, %y")}
+
+    grouped_data.each_with_object([]) do |(key, value), array|
+      array << Hash[key, value.sum { |t| t[:amount] }]
+    end
+  end
+
+  def monthly_grouped_incomes
+    monthly_grouped_transactions_by_type('Income').take(8)
+  end
+
+  def monthly_grouped_expenses
+    monthly_grouped_transactions_by_type('Expense').take(8)
+  end
 end
