@@ -27,4 +27,5 @@ Things you may want to cover:
   - run `rails s` (starts up server locally on port 3001)
   - Also run `bundle exec sidekiq` on anothe tab of the same directory
 
+FRONT END REPO: [Link](https://github.com/emekafredy/xpens-traka-fe)
 API Doc: [Link](https://documenter.getpostman.com/view/15327990/2s93zE3L2J)
